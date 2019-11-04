@@ -31,8 +31,8 @@ class FilePrompt extends Input {
     const index = parsed.lastIndexOf(path.sep) + 1;
     const dir = parsed.substring(0, index);
     const ext = parsed.substring(index, parsed.length);
-    if (fs.existsSync(dir)) {
-      const reg = new RegExp(`^${ext}.*$`, "i");
+    const reg = new RegExp(`^${ext}.*$`, "i");
+    try {
       this.state.matches = fs.readdirSync(dir).filter(f => reg.test(f));
       if (this.state.matches.length) {
         this.state.match_index = 0;
@@ -45,6 +45,11 @@ class FilePrompt extends Input {
         this.state.tab_completed = false;
         this.alert();
       }
+    } catch (err) {
+      this.state.matches = [];
+      this.state.match_index = null;
+      this.state.tab_completed = false;
+      this.alert();
     }
   }
   dispatch(ch, key) {
@@ -71,10 +76,10 @@ class FilePrompt extends Input {
 
 // Use the prompt by creating an instance of your custom prompt class.
 const prompt = new FilePrompt({
-  message: "How many sprays do you want?"
+  message: "Tab Complete a File Path"
 });
 
 prompt
   .run()
-  .then(answer => console.log("Sprays:", answer))
+  .then(answer => console.log("Path:", answer))
   .catch(console.error);
