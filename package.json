@@ -1,0 +1,16 @@
+{
+  "name": "enquirer-path",
+  "version": "1.0.0",
+  "description": "An add-in file or directory selection module for the incredible enquirer library",
+  "main": "index.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/index.js"
+  },
+  "author": "ChrisMc1",
+  "license": "ISC",
+  "dependencies": {
+    "enquirer": "^2.3.2",
+    "glob": "^7.1.5"
+  }
+}
