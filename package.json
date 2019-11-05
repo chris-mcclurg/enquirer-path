@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/index.js"
   },
-  "author": "ChrisMc1",
+  "author": "Christopher McClurg <ChrisMc4>",
   "license": "ISC",
   "dependencies": {
     "enquirer": "^2.3.2",
