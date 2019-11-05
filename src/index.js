@@ -24,7 +24,10 @@ class FilePrompt extends Input {
     this.render();
   }
   prev() {
-    console.log("Shift Tab");
+    if (this.state.tab_completed && this.state.matches.length) {
+      if (this.state.match_index) this.state.match_index--;
+      else this.state.match_index = this.state.matches.length - 1;
+    }
   }
   parsePath() {
     const parsed = this.state.input.replace(/[\\\/]/g, path.sep);
@@ -53,28 +56,19 @@ class FilePrompt extends Input {
     }
   }
   dispatch(ch, key) {
-    if (!ch || key.ctrl || key.code) return this.alert();
     this.state.tab_completed = false;
-    this.append(ch);
+    super.dispatch(ch, key);
   }
   delete() {
-    let { cursor, input } = this.state;
     this.state.tab_completed = false;
-    if (cursor <= 0) return this.alert();
-    this.input = `${input}`.slice(0, cursor - 1) + `${input}`.slice(cursor);
-    this.moveCursor(-1);
-    this.render();
+    super.delete();
   }
   deleteForward() {
-    let { cursor, input } = this.state;
     this.state.tab_completed = false;
-    if (input[cursor] === void 0) return this.alert();
-    this.input = `${input}`.slice(0, cursor) + `${input}`.slice(cursor + 1);
-    this.render();
+    super.deleteForward();
   }
 }
 
-// Use the prompt by creating an instance of your custom prompt class.
 const prompt = new FilePrompt({
   message: "Tab Complete a File Path"
 });
